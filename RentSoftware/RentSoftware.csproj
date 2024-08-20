@@ -20,6 +20,7 @@
     <ProjectReference Include="..\RentSoftware.Core\RentSoftware.Core.csproj" />
     <ProjectReference Include="..\RentSoftware.Repository\RentSoftware.Repository.csproj" />
     <ProjectReference Include="..\RentSoftware.Service\RentSoftware.Service.csproj" />
+    <ProjectReference Include="..\UILayer\UILayer.csproj" />
   </ItemGroup>
 
 </Project>

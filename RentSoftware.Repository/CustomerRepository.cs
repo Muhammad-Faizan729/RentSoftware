@@ -1,13 +1,29 @@
-﻿using RentSoftware.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using RentSoftware.Core.Entities;
 using RentSoftware.Core.Repositories;
 
 namespace RentSoftware.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
-        public Task AddCustomerAsync(Customer customer)
+        private readonly RentSoftwareDbContext _context;
+        public CustomerRepository(RentSoftwareDbContext context)
+
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task AddCustomerAsync(Customer customer)
+        {
+            await _context.Customers.AddAsync(customer);
+           
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine("An error occurred while saving changes: " + ex.InnerException?.Message);
+            }
         }
 
         public Task DeleteCustomerAsync(int id)
@@ -15,14 +31,14 @@ namespace RentSoftware.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Customer>> GetAllCustomerAsync()
+        public async Task<IEnumerable<Customer>> GetAllCustomerAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Customers.ToListAsync();
         }
 
-        public Task GetCustomerByIdAsync(int id)
+        public async Task<Customer> GetCustomerByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Customers.FindAsync(id);
         }
 
         public Task UpdateCustomerAsync(Customer customer)

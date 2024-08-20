@@ -11,7 +11,7 @@ namespace RentSoftware.Core.Services
     {
         Task<IEnumerable<Customer>> GetAllCustomerAsync();
 
-        Task GetCustomerByIdAsync(int id);
+        Task<Customer> GetCustomerByIdAsync(int id);
 
         Task AddCustomerAsync(Customer customer);
 

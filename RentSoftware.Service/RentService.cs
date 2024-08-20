@@ -1,13 +1,21 @@
 ﻿using RentSoftware.Core.Entities;
+using RentSoftware.Core.Repositories;
 using RentSoftware.Core.Services;
 
 namespace RentSoftware.Service
 {
     public class RentService : IRentService
     {
-        public Task AddRentAsync(Rent rent)
+        private readonly IRentRepository _rentRepository;
+
+        public RentService(IRentRepository rentRepository)
         {
-            throw new NotImplementedException();
+            _rentRepository = rentRepository;
+        }
+
+        public async Task AddRentAsync(Rent rent)
+        {
+            await _rentRepository.AddRentAsync(rent);
         }
 
         public Task DeleteRentAsync(int id)

@@ -11,7 +11,7 @@ namespace RentSoftware.Core.Repositories
     {
         Task<IEnumerable<Car>> GetAllCarAsync();
 
-        Task GetCarByIdAsync(int id);
+        Task<Car> GetCarByIdAsync(int id);
 
         Task AddCarAsync(Car car);
 

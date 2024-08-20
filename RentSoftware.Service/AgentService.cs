@@ -1,13 +1,21 @@
 ﻿using RentSoftware.Core.Entities;
+using RentSoftware.Core.Repositories;
 using RentSoftware.Core.Services;
 
 namespace RentSoftware.Service
 {
     public class AgentService : IAgentService
     {
-        public Task AddAgentAsync(Agent agent)
+        private readonly IAgentRepository _agentRepository;
+
+        public AgentService(IAgentRepository agentRepository)
         {
-            throw new NotImplementedException();
+            _agentRepository = agentRepository;
+        }
+
+        public async Task AddAgentAsync(Agent agent)
+        {
+            await _agentRepository.AddAgentAsync(agent);
         }
 
         public Task DeleteAgentAsync(int id)
@@ -15,9 +23,9 @@ namespace RentSoftware.Service
             throw new NotImplementedException();
         }
 
-        public Task GetAgentByIdAsync(int id)
+        public async Task<Agent> GetAgentByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _agentRepository.GetAgentByIdAsync(id);
         }
 
         public Task<IEnumerable<Agent>> GetAllAgentAsync()

@@ -1,22 +1,26 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentSoftware.Core.Entities;
 using RentSoftware.Core.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace RentSoftware.Repository
 {
-    public class AgentRepository : IAgentRepository
+    public class RentRepository : IRentRepository
     {
         private readonly RentSoftwareDbContext _context;
 
-        public AgentRepository(RentSoftwareDbContext dbContext)
+        public RentRepository(RentSoftwareDbContext context)
         {
-            _context = dbContext;
+            _context = context;
         }
 
-        public async Task AddAgentAsync(Agent agent)
+        public async Task AddRentAsync(Rent rent)
         {
-            await _context.Agents.AddAsync(agent);
-            //_context.SaveChanges();
+            await _context.Rents.AddAsync(rent);
             try
             {
                 await _context.SaveChangesAsync();
@@ -27,22 +31,22 @@ namespace RentSoftware.Repository
             }
         }
 
-        public Task DeleteAgentAsync(int id)
+        public Task DeleteRentAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Agent> GetAgentByIdAsync(int id)
-        {
-            return await _context.Agents.FindAsync(id);
-        }
-
-        public Task<IEnumerable<Agent>> GetAllAgentAsync()
+        public Task<IEnumerable<Rent>> GetAllRentAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAgentAsync(Agent agent)
+        public Task GetRentByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateRentAsync(Rent rent)
         {
             throw new NotImplementedException();
         }

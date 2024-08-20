@@ -1,9 +1,4 @@
 ﻿using RentSoftware.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentSoftware.Core.Repositories
 {
@@ -11,7 +6,7 @@ namespace RentSoftware.Core.Repositories
     {
         Task<IEnumerable<Agent>> GetAllAgentAsync();
 
-        Task GetAgentByIdAsync(int id);
+        Task<Agent> GetAgentByIdAsync(int id);
 
         Task AddAgentAsync(Agent agent);
 

@@ -1,13 +1,20 @@
 ﻿using RentSoftware.Core.Entities;
+using RentSoftware.Core.Repositories;
 using RentSoftware.Core.Services;
 
 namespace RentSoftware.Service
 {
     public class CustomerService : ICustomerService
     {
-        public Task AddCustomerAsync(Customer customer)
+        private readonly ICustomerRepository _customerRepository;
+
+        public CustomerService(ICustomerRepository customerRepository)
         {
-            throw new NotImplementedException();
+            _customerRepository = customerRepository;
+        }
+        public async Task AddCustomerAsync(Customer customer)
+        {
+            await _customerRepository.AddCustomerAsync(customer);
         }
 
         public Task DeleteCustomerAsync(int id)
@@ -15,14 +22,14 @@ namespace RentSoftware.Service
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Customer>> GetAllCustomerAsync()
+        public async Task<IEnumerable<Customer>> GetAllCustomerAsync()
         {
-            throw new NotImplementedException();
+            return await _customerRepository.GetAllCustomerAsync();
         }
 
-        public Task GetCustomerByIdAsync(int id)
+        public async Task<Customer> GetCustomerByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _customerRepository.GetCustomerByIdAsync(id);
         }
 
         public Task UpdateCustomerAsync(Customer customer)

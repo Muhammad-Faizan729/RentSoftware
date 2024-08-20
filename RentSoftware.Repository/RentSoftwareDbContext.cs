@@ -14,6 +14,10 @@ namespace RentSoftware.Repository
 
         public DbSet<Rent> Rents { get; set; }
 
+        public RentSoftwareDbContext() : base()
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS; Database=RentSoftware; Trusted_Connection=true; TrustServerCertificate=true;");
@@ -22,6 +26,24 @@ namespace RentSoftware.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Agent>()
+               .HasMany(a => a.Rents)
+               .WithOne(r => r.Agent)
+               .HasForeignKey(r => r.AgentId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.Rents)
+                .WithOne(r => r.Customer)
+                .HasForeignKey(r => r.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Car>()
+                .HasMany(c => c.Rents)
+                .WithOne(r => r.Car)
+                .HasForeignKey(r => r.CarId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -1,12 +1,19 @@
 ﻿using RentSoftware.Core.Entities;
+using RentSoftware.Core.Repositories;
 using RentSoftware.Core.Services;
 namespace RentSoftware.Service
 {
     public class CarService : ICarService
     {
-        public Task AddCarAsync(Car car)
+        private readonly ICarRepository _carRepository;
+
+        public CarService(ICarRepository carRepository)
         {
-            throw new NotImplementedException();
+            _carRepository = carRepository;
+        }
+        public async Task AddCarAsync(Car car)
+        {
+           await _carRepository.AddCarAsync(car);
         }
 
         public Task DeleteCarAsync(int id)
@@ -14,14 +21,14 @@ namespace RentSoftware.Service
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Car>> GetAllCarAsync()
+        public async Task<IEnumerable<Car>> GetAllCarAsync()
         {
-            throw new NotImplementedException();
+           return await _carRepository.GetAllCarAsync();
         }
 
-        public Task GetCarByIdAsync(int id)
+        public async Task<Car> GetCarByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _carRepository.GetCarByIdAsync(id);
         }
 
         public Task UpdateCarAsync(Car car)

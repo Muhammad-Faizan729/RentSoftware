@@ -6,7 +6,7 @@ namespace RentSoftware.Core.Services
     {
         Task<IEnumerable<Agent>> GetAllAgentAsync();
 
-        Task GetAgentByIdAsync(int id);
+        Task<Agent> GetAgentByIdAsync(int id);
 
         Task AddAgentAsync(Agent agent);
 

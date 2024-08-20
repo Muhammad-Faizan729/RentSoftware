@@ -1,13 +1,31 @@
-﻿using RentSoftware.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using RentSoftware.Core.Entities;
 using RentSoftware.Core.Repositories;
 
 namespace RentSoftware.Repository
 {
     public class CarRepository : ICarRepository
     {
-        public Task AddCarAsync(Car car)
+        private readonly RentSoftwareDbContext _context;
+
+        public CarRepository(RentSoftwareDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task AddCarAsync(Car car)
+        {
+            await _context.Cars.AddAsync(car);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine("An error occurred while saving changes: " + ex.InnerException?.Message);
+            }
+
         }
 
         public Task DeleteCarAsync(int id)
@@ -15,14 +33,14 @@ namespace RentSoftware.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Car>> GetAllCarAsync()
+        public async Task<IEnumerable<Car>> GetAllCarAsync()
         {
-            throw new NotImplementedException();
+           return await _context.Cars.ToListAsync();
         }
 
-        public Task GetCarByIdAsync(int id)
+        public async Task<Car> GetCarByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Cars.FindAsync(id);
         }
 
         public Task UpdateCarAsync(Car car)
