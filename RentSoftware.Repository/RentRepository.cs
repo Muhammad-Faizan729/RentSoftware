@@ -36,9 +36,13 @@ namespace RentSoftware.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Rent>> GetAllRentAsync()
+        public async Task<IEnumerable<Rent>> GetAllRentAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Rents
+            .Include(r => r.Car)          
+            .Include(r => r.Customer)     
+            .Include(r => r.Agent)        
+            .ToListAsync();
         }
 
         public Task GetRentByIdAsync(int id)

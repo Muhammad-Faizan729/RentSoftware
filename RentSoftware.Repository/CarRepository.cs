@@ -43,9 +43,19 @@ namespace RentSoftware.Repository
             return await _context.Cars.FindAsync(id);
         }
 
-        public Task UpdateCarAsync(Car car)
+        public async Task UpdateCarAsync(Car car)
         {
-            throw new NotImplementedException();
+            _context.Cars.Attach(car);
+            _context.Entry(car).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine("An error occurred while updating the Car: " + ex.InnerException?.Message);
+            }
         }
     }
 }

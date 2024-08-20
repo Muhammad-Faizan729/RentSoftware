@@ -37,14 +37,24 @@ namespace RentSoftware.Repository
             return await _context.Agents.FindAsync(id);
         }
 
-        public Task<IEnumerable<Agent>> GetAllAgentAsync()
+        public async Task<IEnumerable<Agent>> GetAllAgentAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Agents.ToListAsync();
         }
 
-        public Task UpdateAgentAsync(Agent agent)
+        public async Task UpdateAgentAsync(Agent agent)
         {
-            throw new NotImplementedException();
+            _context.Agents.Attach(agent); 
+            _context.Entry(agent).State = EntityState.Modified; 
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine("An error occurred while updating the agent: " + ex.InnerException?.Message);
+            }
         }
     }
 }

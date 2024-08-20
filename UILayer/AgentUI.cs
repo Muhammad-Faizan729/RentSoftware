@@ -28,12 +28,25 @@ namespace UILayer
         public async Task DisplayAgentMenu()
         {
             Console.WriteLine("Agent Management:");
+
             Console.WriteLine("1. Add Agent");
             Console.WriteLine("2. Update Agent");
             Console.WriteLine("3. Delete Agent");
             Console.WriteLine("4. View All Agents");
-            Console.WriteLine("5. Add Car");
-            Console.WriteLine("6. Add Rent");
+
+            Console.WriteLine("5. Add Customer");
+            Console.WriteLine("6. Update Customer");
+            Console.WriteLine("7. Delete Customer");
+            Console.WriteLine("8. View All Customers");
+
+            Console.WriteLine("9.  Add Car");
+            Console.WriteLine("10. Update Car");
+            Console.WriteLine("11. Delete Car");
+            Console.WriteLine("12. View All Car");
+
+            Console.WriteLine("13. Add Rent");
+            Console.WriteLine("14. View All Rents");
+
             Console.WriteLine("Select an option:");
             var choice = Console.ReadLine();
 
@@ -43,19 +56,49 @@ namespace UILayer
                     await AddNewAgent();
                     break;
                 case "2":
-                    // UpdateAgent logic here
+                    await UpdateAgent();
                     break;
                 case "3":
                     // DeleteAgent logic here
                     break;
                 case "4":
-                    // ViewAllAgents logic here
+                    await ViewAllAgents();
                     break;
                 case "5":
-                    await AddNewCar();
+                    await AddNewCustomer();
                     break;
                 case "6":
+                    await UpdateCustomer();
+                    break;
+                case "7":
+                    
+                    break;
+                case "8":
+                    await ViewAllCustomers();
+                    break;
+                case "9":
+                    await AddNewCar();
+                    break;
+                case "10":
+                    await UpdateCar();
+                    break;
+                case "11":
+
+                    break;
+                case "12":
+                    await ViewAllCars();
+                    break;
+                case "13":
                     await AddRent();
+                    break;
+                case "14":
+                    await ViewAllRents();
+                    break;
+                case "15":
+
+                    break;
+                case "16":
+
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
@@ -79,7 +122,102 @@ namespace UILayer
 
         private async Task UpdateAgent()
         {
+            Console.WriteLine("Here are the registered agents:");
+            var agents = await _agentService.GetAllAgentAsync();
 
+            foreach (var agent in agents)
+            {
+                Console.WriteLine($"Agent ID: {agent.AgentId}, Name: {agent.Name}");
+            }
+
+            Console.WriteLine("Enter the Agent ID you want to update:");
+            int agentId = Convert.ToInt32(Console.ReadLine());
+
+            var selectedAgent = await _agentService.GetAgentByIdAsync(agentId);
+            if (selectedAgent == null)
+            {
+                Console.WriteLine("Invalid Agent ID.");
+                return;
+            }
+
+            Console.WriteLine($"Current Name: {selectedAgent.Name}");
+
+            Console.WriteLine("Enter the new name for the agent:");
+            string newName = Console.ReadLine();
+
+            selectedAgent.Name = newName;
+
+            await _agentService.UpdateAgentAsync(selectedAgent);
+
+            Console.WriteLine("Agent updated successfully.");
+        }
+
+        private async Task ViewAllAgents()
+        {
+            Console.WriteLine("Here is List of All Agents");
+            var GetAllAgents = await _agentService.GetAllAgentAsync();
+
+            foreach (var agent in GetAllAgents)
+            {
+                Console.WriteLine($"Agent ID: {agent.AgentId}, Name: {agent.Name}");
+            }
+        }
+
+        private async Task AddNewCustomer()
+        {
+            Console.WriteLine("Enter Customer Name : ");
+            string customerName = Console.ReadLine();
+
+            var customer = new Customer
+            {
+                CustomerName = customerName
+            };
+
+            await _customerService.AddCustomerAsync(customer);
+            Console.WriteLine("Customer added successfully.");
+        }
+
+        private async Task UpdateCustomer()
+        {
+            Console.WriteLine("Here are the registered Customer:");
+            var customers = await _customerService.GetAllCustomerAsync();
+
+            foreach (var customer in customers)
+            {
+                Console.WriteLine($"Customer ID: {customer.CustomerId}, Name: {customer.CustomerName}");
+            }
+
+            Console.WriteLine("Enter the Customer ID you want to update:");
+            int customerId = Convert.ToInt32(Console.ReadLine());
+
+            var selectedCustomer = await _customerService.GetCustomerByIdAsync(customerId);
+            if (selectedCustomer == null)
+            {
+                Console.WriteLine("Invalid Customer ID.");
+                return;
+            }
+
+            Console.WriteLine($"Current Name: {selectedCustomer.CustomerName}");
+
+            Console.WriteLine("Enter the new name for the Customer:");
+            string newName = Console.ReadLine();
+
+            selectedCustomer.CustomerName = newName;
+
+            await _customerService.UpdateCustomerAsync(selectedCustomer);
+
+            Console.WriteLine("Customer updated successfully.");
+        }
+
+        private async Task ViewAllCustomers()
+        {
+            Console.WriteLine("Here is list of All Customers");
+            var GetAllCustomers = await _customerService.GetAllCustomerAsync();
+
+            foreach (var customer in GetAllCustomers)
+            {
+                Console.WriteLine($"Customer ID: {customer.CustomerId}, Customer Name: {customer.CustomerName}");
+            }
         }
 
         private async Task AddNewCar()
@@ -94,6 +232,49 @@ namespace UILayer
 
             await _carService.AddCarAsync(car);
             Console.WriteLine("Car added successfully.");
+        }
+
+        private async Task UpdateCar()
+        {
+            Console.WriteLine("Here are list of car:");
+            var cars = await _carService.GetAllCarAsync();
+
+            foreach (var car in cars)
+            {
+                Console.WriteLine($"Car ID: {car.CarId}, Car Model : {car.CarModel}");
+            }
+
+            Console.WriteLine("Enter the Car ID you want to update:");
+            int carId = Convert.ToInt32(Console.ReadLine());
+
+            var selectedCar= await _carService.GetCarByIdAsync(carId);
+            if (selectedCar == null)
+            {
+                Console.WriteLine("Invalid Car ID.");
+                return;
+            }
+
+            Console.WriteLine($"Current Model: {selectedCar.CarModel}");
+
+            Console.WriteLine("Enter the new Model for the Car:");
+            string newName = Console.ReadLine();
+
+            selectedCar.CarModel = newName;
+
+            await _carService.UpdateCarAsync(selectedCar);
+
+            Console.WriteLine("Car updated successfully.");
+        }
+
+        private async Task ViewAllCars()
+        {
+            Console.WriteLine("Here is list of All Cars");
+            var GetAllCars = await _carService.GetAllCarAsync();
+
+            foreach (var car in GetAllCars)
+            {
+                Console.WriteLine($"Car ID: {car.CarId}, Car Model: {car.CarModel}");
+            }
         }
 
         private async Task AddRent()
@@ -168,6 +349,21 @@ namespace UILayer
             };
            await _rentService.AddRentAsync(rent);
             Console.WriteLine("Rent added successfully.");
+        }
+
+        private async Task ViewAllRents()
+        {
+            Console.WriteLine("Here is list of All Rents");
+            var GetAllRents = await _rentService.GetAllRentAsync();
+
+            foreach (var rent in GetAllRents)
+            {
+                Console.WriteLine($"Rent ID: {rent.RentId}, " +
+                         $"Car Model: {rent.Car.CarModel}, " +
+                         $"Customer Name: {rent.Customer.CustomerName}, " +
+                         $"Agent Name: {rent.Agent.Name}, " +
+                         $"Rent Date: {rent.RentDate}");
+            }
         }
     }
 }

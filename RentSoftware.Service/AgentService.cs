@@ -28,14 +28,14 @@ namespace RentSoftware.Service
             return await _agentRepository.GetAgentByIdAsync(id);
         }
 
-        public Task<IEnumerable<Agent>> GetAllAgentAsync()
+        public async Task<IEnumerable<Agent>> GetAllAgentAsync()
         {
-            throw new NotImplementedException();
+           return await _agentRepository.GetAllAgentAsync();
         }
 
-        public Task UpdateAgentAsync(Agent agent)
+        public async Task UpdateAgentAsync(Agent agent)
         {
-            throw new NotImplementedException();
+            await _agentRepository.UpdateAgentAsync(agent);
         }
     }
 }

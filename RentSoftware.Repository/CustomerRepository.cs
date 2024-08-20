@@ -41,9 +41,19 @@ namespace RentSoftware.Repository
             return await _context.Customers.FindAsync(id);
         }
 
-        public Task UpdateCustomerAsync(Customer customer)
+        public async Task UpdateCustomerAsync(Customer customer)
         {
-            throw new NotImplementedException();
+            _context.Customers.Attach(customer);
+            _context.Entry(customer).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine("An error occurred while updating the Customer: " + ex.InnerException?.Message);
+            }
         }
     }
 }

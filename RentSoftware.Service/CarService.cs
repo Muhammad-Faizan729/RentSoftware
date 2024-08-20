@@ -31,9 +31,9 @@ namespace RentSoftware.Service
             return await _carRepository.GetCarByIdAsync(id);
         }
 
-        public Task UpdateCarAsync(Car car)
+        public async Task UpdateCarAsync(Car car)
         {
-            throw new NotImplementedException();
+            await _carRepository.UpdateCarAsync(car);
         }
     }
 }

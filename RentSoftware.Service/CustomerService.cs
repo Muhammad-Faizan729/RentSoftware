@@ -32,9 +32,9 @@ namespace RentSoftware.Service
             return await _customerRepository.GetCustomerByIdAsync(id);
         }
 
-        public Task UpdateCustomerAsync(Customer customer)
+        public async Task UpdateCustomerAsync(Customer customer)
         {
-            throw new NotImplementedException();
+            await _customerRepository.UpdateCustomerAsync(customer);
         }
     }
 }
