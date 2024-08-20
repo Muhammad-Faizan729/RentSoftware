@@ -59,7 +59,7 @@ namespace UILayer
                     await UpdateAgent();
                     break;
                 case "3":
-                    // DeleteAgent logic here
+                    await DeleteAgent();
                     break;
                 case "4":
                     await ViewAllAgents();
@@ -71,7 +71,7 @@ namespace UILayer
                     await UpdateCustomer();
                     break;
                 case "7":
-                    
+                    await DeleteCustomer();
                     break;
                 case "8":
                     await ViewAllCustomers();
@@ -83,7 +83,7 @@ namespace UILayer
                     await UpdateCar();
                     break;
                 case "11":
-
+                    await DeleteCar();
                     break;
                 case "12":
                     await ViewAllCars();
@@ -95,7 +95,7 @@ namespace UILayer
                     await ViewAllRents();
                     break;
                 case "15":
-
+                    // delete Rent
                     break;
                 case "16":
 
@@ -150,6 +150,33 @@ namespace UILayer
             await _agentService.UpdateAgentAsync(selectedAgent);
 
             Console.WriteLine("Agent updated successfully.");
+        }
+
+        private async Task DeleteAgent()
+        {
+            Console.WriteLine("Here are the registered agents:");
+            var agents = await _agentService.GetAllAgentAsync();
+
+            foreach (var agent in agents)
+            {
+                Console.WriteLine($"Agent ID: {agent.AgentId}, Name: {agent.Name}");
+            }
+
+            Console.WriteLine("Enter the Agent ID you want to update:");
+            int agentId = Convert.ToInt32(Console.ReadLine());
+
+            var selectedAgent = await _agentService.GetAgentByIdAsync(agentId);
+            if (selectedAgent == null)
+            {
+                Console.WriteLine("Invalid Agent ID.");
+                return;
+            }
+
+            Console.WriteLine($"Current Name: {selectedAgent.Name}");
+
+            await _agentService.DeleteAgentAsync(selectedAgent);
+
+            Console.WriteLine("Agent Deleted successfully.");
         }
 
         private async Task ViewAllAgents()
@@ -209,6 +236,33 @@ namespace UILayer
             Console.WriteLine("Customer updated successfully.");
         }
 
+        private async Task DeleteCustomer()
+        {
+            Console.WriteLine("Here are the registered customers:");
+            var customers = await _customerService.GetAllCustomerAsync();
+
+            foreach (var customer in customers)
+            {
+                Console.WriteLine($"Customer ID: {customer.CustomerId}, customer Name: {customer.CustomerName}");
+            }
+
+            Console.WriteLine("Enter the Customer ID you want to update:");
+            int customerId = Convert.ToInt32(Console.ReadLine());
+
+            var selectedCustomer = await _customerService.GetCustomerByIdAsync(customerId);
+            if (selectedCustomer == null)
+            {
+                Console.WriteLine("Invalid Customer ID.");
+                return;
+            }
+
+            Console.WriteLine($"Current Name: {selectedCustomer.CustomerName}");
+
+            await _customerService.DeleteCustomerAsync(selectedCustomer);
+
+            Console.WriteLine("Customer Deleted successfully.");
+        }
+
         private async Task ViewAllCustomers()
         {
             Console.WriteLine("Here is list of All Customers");
@@ -265,6 +319,34 @@ namespace UILayer
 
             Console.WriteLine("Car updated successfully.");
         }
+
+        private async Task DeleteCar()
+        {
+            Console.WriteLine("Here are list of car:");
+            var cars = await _carService.GetAllCarAsync();
+
+            foreach (var car in cars)
+            {
+                Console.WriteLine($"Car ID: {car.CarId}, Car Model : {car.CarModel}");
+            }
+
+            Console.WriteLine("Enter the Car ID you want to delete:");
+            int carId = Convert.ToInt32(Console.ReadLine());
+
+            var selectedCar = await _carService.GetCarByIdAsync(carId);
+            if (selectedCar == null)
+            {
+                Console.WriteLine("Invalid Car ID.");
+                return;
+            }
+
+            Console.WriteLine($"Current Model: {selectedCar.CarModel}");
+
+            await _carService.DeleteCarAsync(selectedCar);
+
+            Console.WriteLine("Car Deleted successfully.");
+        }
+
 
         private async Task ViewAllCars()
         {

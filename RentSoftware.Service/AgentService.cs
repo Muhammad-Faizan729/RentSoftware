@@ -18,9 +18,9 @@ namespace RentSoftware.Service
             await _agentRepository.AddAgentAsync(agent);
         }
 
-        public Task DeleteAgentAsync(int id)
+        public async Task DeleteAgentAsync(Agent agent)
         {
-            throw new NotImplementedException();
+            await _agentRepository.DeleteAgentAsync(agent);
         }
 
         public async Task<Agent> GetAgentByIdAsync(int id)

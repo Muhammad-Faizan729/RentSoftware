@@ -27,9 +27,18 @@ namespace RentSoftware.Repository
             }
         }
 
-        public Task DeleteAgentAsync(int id)
+        public async Task DeleteAgentAsync(Agent agent)
         {
-            throw new NotImplementedException();
+             _context.Agents.Remove(agent);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine("An error occurred while Delete Agent: " + ex.InnerException?.Message);
+            }
         }
 
         public async Task<Agent> GetAgentByIdAsync(int id)

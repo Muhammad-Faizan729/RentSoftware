@@ -17,9 +17,9 @@ namespace RentSoftware.Service
             await _customerRepository.AddCustomerAsync(customer);
         }
 
-        public Task DeleteCustomerAsync(int id)
+        public async Task DeleteCustomerAsync(Customer customer)
         {
-            throw new NotImplementedException();
+            await _customerRepository.DeleteCustomerAsync(customer);
         }
 
         public async Task<IEnumerable<Customer>> GetAllCustomerAsync()

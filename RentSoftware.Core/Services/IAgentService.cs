@@ -12,6 +12,6 @@ namespace RentSoftware.Core.Services
 
         Task UpdateAgentAsync(Agent agent);
 
-        Task DeleteAgentAsync(int id);
+        Task DeleteAgentAsync(Agent agent);
     }
 }

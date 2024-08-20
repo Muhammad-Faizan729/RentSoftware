@@ -26,9 +26,18 @@ namespace RentSoftware.Repository
             }
         }
 
-        public Task DeleteCustomerAsync(int id)
+        public async Task DeleteCustomerAsync(Customer customer)
         {
-            throw new NotImplementedException();
+            _context.Customers.Remove(customer);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine("An error occurred while Delete Customer: " + ex.InnerException?.Message);
+            }
         }
 
         public async Task<IEnumerable<Customer>> GetAllCustomerAsync()

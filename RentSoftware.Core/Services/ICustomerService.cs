@@ -17,6 +17,6 @@ namespace RentSoftware.Core.Services
 
         Task UpdateCustomerAsync(Customer customer);
 
-        Task DeleteCustomerAsync(int id);
+        Task DeleteCustomerAsync(Customer customer);
     }
 }

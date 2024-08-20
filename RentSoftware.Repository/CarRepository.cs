@@ -28,9 +28,18 @@ namespace RentSoftware.Repository
 
         }
 
-        public Task DeleteCarAsync(int id)
+        public async Task DeleteCarAsync(Car car)
         {
-            throw new NotImplementedException();
+            _context.Cars.Remove(car);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine("An error occurred while Delete Car: " + ex.InnerException?.Message);
+            }
         }
 
         public async Task<IEnumerable<Car>> GetAllCarAsync()

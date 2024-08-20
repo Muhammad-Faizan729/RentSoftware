@@ -17,6 +17,6 @@ namespace RentSoftware.Core.Repositories
 
         Task UpdateCustomerAsync(Customer customer);
 
-        Task DeleteCustomerAsync(int id);
+        Task DeleteCustomerAsync(Customer customer);
     }
 }

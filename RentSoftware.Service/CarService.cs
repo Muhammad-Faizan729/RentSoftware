@@ -16,9 +16,9 @@ namespace RentSoftware.Service
            await _carRepository.AddCarAsync(car);
         }
 
-        public Task DeleteCarAsync(int id)
+        public async Task DeleteCarAsync(Car car)
         {
-            throw new NotImplementedException();
+            await _carRepository.DeleteCarAsync(car);
         }
 
         public async Task<IEnumerable<Car>> GetAllCarAsync()

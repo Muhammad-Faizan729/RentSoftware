@@ -35,17 +35,14 @@ namespace RentSoftware
             while (isExit)
             {
                 Console.WriteLine("Please Select One Option : ");
-                Console.WriteLine("\n Press 1 : Customer,\n Press 2 : Agent \n Press 3 : Exit");
+                Console.WriteLine("\n Press 1 : Display-Menu,\n Press 2 : Exit");
                 int Choice = Convert.ToInt32(Console.ReadLine());
                 switch (Choice)
                 {
                     case 1:
-                        await customerUI.DisplayCustomerMenu();
-                        break;
-                    case 2:
                         await agentUI.DisplayAgentMenu();
                         break;
-                    case 3:
+                    case 2:
                         isExit = false;
                         break;
                     default:

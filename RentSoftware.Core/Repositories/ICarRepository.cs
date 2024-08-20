@@ -17,6 +17,6 @@ namespace RentSoftware.Core.Repositories
 
         Task UpdateCarAsync(Car car);
 
-        Task DeleteCarAsync(int id);
+        Task DeleteCarAsync(Car car);
     }
 }
