@@ -8,11 +8,12 @@ namespace RentSoftware.Repository
     {
         private readonly RentSoftwareDbContext _context;
 
+        
         public AgentRepository(RentSoftwareDbContext dbContext)
         {
             _context = dbContext;
         }
-
+        
         public async Task AddAgentAsync(Agent agent)
         {
             await _context.Agents.AddAsync(agent);

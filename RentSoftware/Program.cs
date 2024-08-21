@@ -1,4 +1,6 @@
-﻿using RentSoftware.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using RentSoftware.Core.Entities;
 using RentSoftware.Core.Repositories;
 using RentSoftware.Core.Services;
 using RentSoftware.Repository;
@@ -14,22 +16,15 @@ namespace RentSoftware
         static async Task Main(string[] args)
         {
             bool isExit  = true;
-            var dbContext = new RentSoftwareDbContext();
 
-            var agentRepository = new AgentRepository(dbContext);
-            var agentService = new AgentService(agentRepository);
+            var serviceCollection = new ServiceCollection();
+            ConfigureService(serviceCollection);
 
-            var customerRepository = new CustomerRepository(dbContext);
-            var customerService = new CustomerService(customerRepository);
-            var customerUI = new CustomerUI(customerService);
+            var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            var carRepository = new CarRepository(dbContext);
-            var carService = new CarService(carRepository);
+            var agentService = serviceProvider.GetService<IAgentService>();
 
-            var rentRepository = new RentRepository(dbContext);
-            var rentService = new RentService(rentRepository);
-
-            var agentUI = new AgentUI(agentService, carService, rentService, customerService);
+            var agentUI = serviceProvider.GetService<AgentUI>();
 
 
             while (isExit)
@@ -52,6 +47,22 @@ namespace RentSoftware
             }
         }
 
-       
+        private static void ConfigureService(ServiceCollection serviceCollection)
+        {
+            serviceCollection.AddTransient<IAgentService, AgentService>();
+            serviceCollection.AddTransient<ICustomerService, CustomerService>();
+            serviceCollection.AddTransient<ICarService, CarService>();
+            serviceCollection.AddTransient<IRentService, RentService>();
+
+            serviceCollection.AddTransient<IAgentRepository, AgentRepository>();
+            serviceCollection.AddTransient<ICustomerRepository, CustomerRepository>();
+            serviceCollection.AddTransient<ICarRepository, CarRepository>();
+            serviceCollection.AddTransient<IRentRepository, RentRepository>();
+
+            serviceCollection.AddTransient<AgentUI>();
+
+            serviceCollection.AddDbContext<RentSoftwareDbContext>(options =>
+                options.UseSqlServer("Server=.\\SQLEXPRESS; Database=RentSoftware; Trusted_Connection=true; TrustServerCertificate=true;"));
+        }
     }
 }

@@ -18,6 +18,11 @@ namespace RentSoftware.Repository
         {
         }
 
+        public RentSoftwareDbContext(DbContextOptions<RentSoftwareDbContext> options)
+            : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS; Database=RentSoftware; Trusted_Connection=true; TrustServerCertificate=true;");

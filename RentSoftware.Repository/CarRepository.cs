@@ -8,11 +8,12 @@ namespace RentSoftware.Repository
     {
         private readonly RentSoftwareDbContext _context;
 
+        
         public CarRepository(RentSoftwareDbContext context)
         {
             _context = context;
         }
-
+        
         public async Task AddCarAsync(Car car)
         {
             await _context.Cars.AddAsync(car);

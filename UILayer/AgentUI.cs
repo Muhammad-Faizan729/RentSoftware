@@ -17,6 +17,7 @@ namespace UILayer
         private readonly IRentService _rentService;
         private readonly ICustomerService _customerService;
 
+        
         public AgentUI(IAgentService agentService, ICarService carService, IRentService rentService, ICustomerService customerService)
         {
             _agentService = agentService;
@@ -24,6 +25,7 @@ namespace UILayer
             _rentService = rentService;
             _customerService = customerService;
         }
+        
 
         public async Task DisplayAgentMenu()
         {

@@ -13,10 +13,12 @@ namespace RentSoftware.Repository
     {
         private readonly RentSoftwareDbContext _context;
 
+        
         public RentRepository(RentSoftwareDbContext context)
         {
             _context = context;
         }
+        
 
         public async Task AddRentAsync(Rent rent)
         {

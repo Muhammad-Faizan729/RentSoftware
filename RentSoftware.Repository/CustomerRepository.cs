@@ -7,11 +7,15 @@ namespace RentSoftware.Repository
     public class CustomerRepository : ICustomerRepository
     {
         private readonly RentSoftwareDbContext _context;
+
+        
         public CustomerRepository(RentSoftwareDbContext context)
 
         {
             _context = context;
         }
+        
+
         public async Task AddCustomerAsync(Customer customer)
         {
             await _context.Customers.AddAsync(customer);
