@@ -17,7 +17,7 @@ namespace RentSoftware.Repository
         public async Task AddAgentAsync(Agent agent)
         {
             await _context.Agents.AddAsync(agent);
-            //_context.SaveChanges();
+
             try
             {
                 await _context.SaveChangesAsync();

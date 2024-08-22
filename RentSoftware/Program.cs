@@ -2,9 +2,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using RentSoftware.Core.Entities;
 using RentSoftware.Core.Repositories;
+using RentSoftware.Core.RepositoriesSP;
 using RentSoftware.Core.Services;
+using RentSoftware.Core.SevicesSP;
 using RentSoftware.Repository;
+using RentSoftware.Repository_StoredProcedure_;
 using RentSoftware.Service;
+using RentSoftware.Service_StoredProcedure_;
 using System;
 using System.Threading.Tasks;
 using UILayer;
@@ -60,6 +64,9 @@ namespace RentSoftware
             serviceCollection.AddTransient<IRentRepository, RentRepository>();
 
             serviceCollection.AddTransient<AgentUI>();
+
+            serviceCollection.AddTransient<IAgentRepositorySP, AgentRepositorySP>();
+            serviceCollection.AddTransient<IAgentServiceSP, AgentServiceSP>();
 
             serviceCollection.AddDbContext<RentSoftwareDbContext>(options =>
                 options.UseSqlServer("Server=.\\SQLEXPRESS; Database=RentSoftware; Trusted_Connection=true; TrustServerCertificate=true;"));

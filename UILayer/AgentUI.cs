@@ -1,5 +1,7 @@
 ﻿using RentSoftware.Core.Entities;
+using RentSoftware.Core.RepositoriesSP;
 using RentSoftware.Core.Services;
+using RentSoftware.Core.SevicesSP;
 using RentSoftware.Service;
 using System;
 using System.Collections.Generic;
@@ -16,14 +18,18 @@ namespace UILayer
         private readonly ICarService _carService;
         private readonly IRentService _rentService;
         private readonly ICustomerService _customerService;
+        private readonly IAgentServiceSP _agentServiceSP;
+        private readonly IAgentRepositorySP _agentRepositorySP;
 
         
-        public AgentUI(IAgentService agentService, ICarService carService, IRentService rentService, ICustomerService customerService)
+        public AgentUI(IAgentService agentService, ICarService carService, IRentService rentService, ICustomerService customerService, IAgentRepositorySP agentRepositorySP, IAgentServiceSP agentServiceSP)
         {
             _agentService = agentService;
             _carService = carService;
             _rentService = rentService;
             _customerService = customerService;
+            _agentServiceSP = agentServiceSP;
+            _agentRepositorySP = agentRepositorySP;
         }
         
 
@@ -48,6 +54,9 @@ namespace UILayer
 
             Console.WriteLine("13. Add Rent");
             Console.WriteLine("14. View All Rents");
+
+            Console.WriteLine("15. Add Agent Using Technique 'Stored Procedure'");
+            Console.WriteLine("16. View All Agent Using Technique 'Stored Procedure'");
 
             Console.WriteLine("Select an option:");
             var choice = Console.ReadLine();
@@ -97,10 +106,10 @@ namespace UILayer
                     await ViewAllRents();
                     break;
                 case "15":
-                    // delete Rent
+                    await AddNewAgentUsingStoredProcedure();
                     break;
                 case "16":
-
+                    await ViewAllAgentsUsingStoredProcedure();
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
@@ -447,6 +456,32 @@ namespace UILayer
                          $"Customer Name: {rent.Customer.CustomerName}, " +
                          $"Agent Name: {rent.Agent.Name}, " +
                          $"Rent Date: {rent.RentDate}");
+            }
+        }
+
+        private async Task AddNewAgentUsingStoredProcedure()
+        {
+            Console.WriteLine("Enter Agent Name : ");
+            string agentName = Console.ReadLine();
+
+            var agent = new Agent
+            {
+                Name = agentName
+            };
+
+            await _agentServiceSP.AddAgentAsync(agent);
+
+            Console.WriteLine("Agent Added Successfully using Stored Procedure! \n");
+        }
+
+        private async Task ViewAllAgentsUsingStoredProcedure()
+        {
+            Console.WriteLine("Here is List of All Agents");
+            var GetAllAgents = await _agentService.GetAllAgentAsync();
+
+            foreach (var agent in GetAllAgents)
+            {
+                Console.WriteLine($"Agent ID: {agent.AgentId}, Name: {agent.Name}");
             }
         }
     }
