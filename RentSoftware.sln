@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentSoftware.Core", "RentSo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UILayer", "UILayer\UILayer.csproj", "{7515CDEF-1829-41DF-A7FB-6856E06DB096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentSoftware.RepositorySP", "RentSoftware.Repository(StoredProcedure)\RentSoftware.RepositorySP.csproj", "{9505965E-5AC3-4B1D-A471-4E7EC18C28B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentSoftware.RepositorySP", "RentSoftware.Repository(StoredProcedure)\RentSoftware.RepositorySP.csproj", "{9505965E-5AC3-4B1D-A471-4E7EC18C28B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentSoftware.ServiceSP", "RentSoftware.Service(StoredProcedure)\RentSoftware.ServiceSP.csproj", "{049B8591-21F8-409E-BED0-AD2733539D3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentSoftware.ServiceSP", "RentSoftware.Service(StoredProcedure)\RentSoftware.ServiceSP.csproj", "{049B8591-21F8-409E-BED0-AD2733539D3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentSoftware.Tests", "RentSoftware.Tests\RentSoftware.Tests.csproj", "{E07D6CAA-8130-44C8-BA0C-1FD4985AF360}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{049B8591-21F8-409E-BED0-AD2733539D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{049B8591-21F8-409E-BED0-AD2733539D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{049B8591-21F8-409E-BED0-AD2733539D3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E07D6CAA-8130-44C8-BA0C-1FD4985AF360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E07D6CAA-8130-44C8-BA0C-1FD4985AF360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E07D6CAA-8130-44C8-BA0C-1FD4985AF360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E07D6CAA-8130-44C8-BA0C-1FD4985AF360}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

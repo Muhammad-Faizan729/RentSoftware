@@ -6,12 +6,25 @@ namespace RentSoftware.Service
 {
     public class AgentService : IAgentService
     {
+        public int result;
         private readonly IAgentRepository _agentRepository;
 
         public AgentService(IAgentRepository agentRepository)
         {
             _agentRepository = agentRepository;
         }
+
+        /*
+        public AgentService(ICustomerRepository @object)
+        {
+        }
+        */
+
+        /*
+        public AgentService()
+        {
+        }
+        */
 
         public async Task AddAgentAsync(Agent agent)
         {
@@ -36,6 +49,11 @@ namespace RentSoftware.Service
         public async Task UpdateAgentAsync(Agent agent)
         {
             await _agentRepository.UpdateAgentAsync(agent);
+        }
+
+        public int Add(int a, int b)
+        {
+            return a + b;
         }
     }
 }

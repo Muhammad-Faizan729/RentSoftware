@@ -13,7 +13,7 @@ namespace RentSoftware.Repository_StoredProcedure_
 {
     public class AgentRepositorySP : IAgentRepositorySP
     {
-        private readonly IAgentRepositorySP _agentRepositorySP;
+       // private readonly IAgentRepositorySP _agentRepositorySP;
 
         string _connectionString = "Server=.\\SQLEXPRESS; Database=RentSoftware; Trusted_Connection=true; TrustServerCertificate=true;";
         public async Task AddAgentAsync(Agent agent)

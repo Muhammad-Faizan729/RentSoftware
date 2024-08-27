@@ -13,5 +13,6 @@ namespace RentSoftware.Core.Repositories
         Task UpdateAgentAsync(Agent agent);
 
         Task DeleteAgentAsync(Agent agent);
+        //void AddCustomerAsync(Customer customer);
     }
 }

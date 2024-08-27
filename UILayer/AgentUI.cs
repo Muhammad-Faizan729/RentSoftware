@@ -31,7 +31,17 @@ namespace UILayer
             _agentServiceSP = agentServiceSP;
             _agentRepositorySP = agentRepositorySP;
         }
-        
+
+        /*
+        public AgentUI()
+        {
+        }
+        */
+
+        public AgentUI(IAgentService agentService)
+        {
+            _agentService = agentService;
+        }
 
         public async Task DisplayAgentMenu()
         {
@@ -117,7 +127,7 @@ namespace UILayer
             }
         }
 
-        private async Task AddNewAgent()
+        public async Task AddNewAgent()
         {
             Console.WriteLine("Enter Agent Name : ");
             string agentName = Console.ReadLine();
@@ -131,7 +141,7 @@ namespace UILayer
             Console.WriteLine("Agent added successfully.");
         }
 
-        private async Task UpdateAgent()
+        public async Task UpdateAgent()
         {
             Console.WriteLine("Here are the registered agents:");
             var agents = await _agentService.GetAllAgentAsync();
@@ -190,7 +200,7 @@ namespace UILayer
             Console.WriteLine("Agent Deleted successfully.");
         }
 
-        private async Task ViewAllAgents()
+        public async Task ViewAllAgents()
         {
             Console.WriteLine("Here is List of All Agents");
             var GetAllAgents = await _agentService.GetAllAgentAsync();

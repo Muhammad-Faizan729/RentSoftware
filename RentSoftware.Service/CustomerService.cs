@@ -8,6 +8,12 @@ namespace RentSoftware.Service
     {
         private readonly ICustomerRepository _customerRepository;
 
+        /*
+        public CustomerService()
+        {
+        }
+        */
+
         public CustomerService(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
