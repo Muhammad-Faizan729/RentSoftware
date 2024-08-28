@@ -65,16 +65,12 @@ namespace RentSoftware.Tests
                 Console.WriteLine("Captured Output:");
                 Console.WriteLine(output);
 
-
                 Assert.That(output, Does.Contain("Here is List of All Agents"));
                 Assert.That(output, Does.Contain("Agent ID: 1, Name: AgentOne"));
                 Assert.That(output, Does.Contain("Agent ID: 2, Name: AgentTwo"));
                 Assert.That(output, Does.Contain("Agent ID: 3, Name: AgentThree"));
             }
-            
-
             agentServiceMock.Verify(a => a.GetAllAgentAsync(), Times.Once);
-
         }
 
         [Test]
@@ -102,7 +98,6 @@ namespace RentSoftware.Tests
 
             agentServiceMock.Verify(a => a.UpdateAgentAsync(It.Is<Agent>(ag => ag.AgentId == 1 && ag.Name == "AgentOneUpdated")), Times.Once);
 
-            // Optional: Reset Console output if needed
             Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
         }
 
