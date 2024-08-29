@@ -23,10 +23,12 @@ namespace RentSoftware.Repository
         {
         }
 
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS; Database=RentSoftware; Trusted_Connection=true; TrustServerCertificate=true;");
         }
+        */
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
