@@ -1,7 +1,6 @@
 using Moq;
 using RentSoftware.Core.Entities;
 using RentSoftware.Core.Repositories;
-using RentSoftware.Repository;
 using RentSoftware.Service;
 
 namespace RentSoftware.Tests
@@ -9,94 +8,95 @@ namespace RentSoftware.Tests
     [TestFixture]
     public class AgentServiceTests
     {
+        private readonly Mock<IAgentRepository> _mockAgentRepository;
+        private readonly AgentService _agentService;
+
+        public AgentServiceTests()
+        {
+            _mockAgentRepository = new Mock<IAgentRepository>();
+            _agentService = new AgentService(_mockAgentRepository.Object);
+        }
+
         [SetUp]
         public void Setup()
         {
         }
-        
 
         [Test]
         [Ignore("Testing")]
         public void Add_AddingTwoValues_ReturnResult()
         {
-
         }
 
         [Test]
-        public async Task AddAgentAsync_whenCalled_SendAgentToRepository()
+        public async Task AddAgentAsync_should_add_agent()
         {
-            var mockAgentRepository = new Mock<IAgentRepository>();
-            var agentService = new AgentService(mockAgentRepository.Object);
-
+            //Arrange
             var mockAgent = new Agent()
             {
-                Name = "test"
+                Name = "fake-name"
             };
 
-            await agentService.AddAgentAsync(mockAgent);
+            //Act
+            await _agentService.AddAgentAsync(mockAgent);
 
-            mockAgentRepository.Verify(a=>a.AddAgentAsync(It.Is<Agent>(ag=>ag.Name == "test")),Times.Once);
+            //Assert
+            _mockAgentRepository.Verify(a => a.AddAgentAsync(It.Is<Agent>(ag => ag.Name == "fake-name")), Times.Once);
         }
 
         [Test]
-        public async Task GetAgentByIdAsync_PassedIdOne_ReturnAgentWithIdOne()
+        public async Task GetAgentByIdAsync_should_return_agent()
         {
-            var mockAgentRepository = new Mock<IAgentRepository>();
-            var agentService = new AgentService(mockAgentRepository.Object);
-
+            //Arrange
             var agents = new List<Agent>()
             {
-                new Agent() { AgentId = 1, Name = "FirstAgent" },
-                new Agent() { AgentId = 2, Name = "SecondAgent" },
-                new Agent() { AgentId = 3, Name = "ThirdAgent" }
+                new Agent() { AgentId = 1, Name = "fake-first-agent" },
+                new Agent() { AgentId = 2, Name = "fake-second-agent" },
+                new Agent() { AgentId = 3, Name = "fake-third-agent" }
             };
+            
+            _mockAgentRepository.Setup(a => a.GetAgentByIdAsync(1)).ReturnsAsync(agents.First(a => a.AgentId == 1));
 
-            mockAgentRepository.Setup(a=>a.GetAllAgentAsync()).ReturnsAsync(agents);
-            mockAgentRepository.Setup(a=>a.GetAgentByIdAsync(1)).ReturnsAsync(agents.First(a=>a.AgentId==1));
+            //Act
+            var result = await _agentService.GetAgentByIdAsync(1);
 
-            var result = await agentService.GetAgentByIdAsync(1);
-
+            //Assert
             Assert.That(result, Is.Not.Null);
             Assert.That(result.AgentId, Is.EqualTo(1));
-            Assert.That(result.Name, Is.EqualTo("FirstAgent"));
+            Assert.That(result.Name, Is.EqualTo("fake-first-agent"));
         }
 
         [Test]
-        public async Task GetTaskAsync_whenCalled_ReturnAllAgents()
+        public async Task GetTaskAsync_should_return_agents()
         {
-            var mockAgentRepository = new Mock<IAgentRepository>();
-            var agentService = new AgentService(mockAgentRepository.Object);
-
+            //Arrange
             var agents = new List<Agent>()
             {
-                new Agent() { AgentId = 1, Name = "FirstAgent" },
-                new Agent() { AgentId = 2, Name = "SecondAgent" },
-                new Agent() { AgentId = 3, Name = "ThirdAgent" }
+                new Agent() { AgentId = 1, Name = "fake-first-agent" },
+                new Agent() { AgentId = 2, Name = "fake-second-agent" },
+                new Agent() { AgentId = 3, Name = "fake-third-agent" }
             };
 
-            mockAgentRepository.Setup(a => a.GetAllAgentAsync()).ReturnsAsync(agents);
+            //Act
+            var result = await _agentService.GetAllAgentAsync();
 
-            var result = await agentService.GetAllAgentAsync();
-
-            mockAgentRepository.Verify(a => a.GetAllAgentAsync(), Times.Once);
+            //Assert
+            _mockAgentRepository.Verify(a => a.GetAllAgentAsync(), Times.Once);
 
             Assert.That(result, Is.Not.Null);
         }
 
         [Test]
-        public async Task DeleteAgentAsync_WhenCalledOrPassAgentToDelete_RemovedAgent()
+        public async Task DeleteAgentAsync_should_delete_agent()
         {
-            var mockAgentRepository = new Mock<IAgentRepository>();
-            var agentService = new AgentService(mockAgentRepository.Object);
-
             var RemovedAgent = new Agent()
             {
-                Name = "test"
+                Name = "fake-agent"
             };
 
-            await agentService.DeleteAgentAsync(RemovedAgent);
+            await _agentService.DeleteAgentAsync(RemovedAgent);
 
-            mockAgentRepository.Verify(a=>a.DeleteAgentAsync(RemovedAgent), Times.Once);
+            _mockAgentRepository.Verify(a => a.DeleteAgentAsync(RemovedAgent), Times.Once);
         }
     }
 }

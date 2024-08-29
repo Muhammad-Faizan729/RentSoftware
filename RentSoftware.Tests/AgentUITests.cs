@@ -7,16 +7,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UILayer;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
-
 
 namespace RentSoftware.Tests
 {
     [TestFixture]
     public class AgentUITests
     {
+        private readonly Mock<IAgentService> _mockAgentService; 
+        private readonly AgentUI _agentUI;
+
+        public AgentUITests()
+        {
+            _mockAgentService = new Mock<IAgentService>();
+            _agentUI = new AgentUI(_mockAgentService.Object);
+        }
 
         [SetUp]
         public void Setup()
@@ -25,78 +30,78 @@ namespace RentSoftware.Tests
         }
 
         [Test]
-        public async Task AddNewAgent_whenCalled_PassAgentToService()
+        public async Task AddNewAgent_should_add_agent()
         {
-            var agentServiceMock = new Mock<IAgentService>();
-            var Agent = new AgentUI(agentServiceMock.Object);
-
+            //Arrange
             var input = "test";
             var consoleInput = new StringReader(input + Environment.NewLine);
             Console.SetIn(consoleInput);
 
-            await Agent.AddNewAgent();
+            //Act
+            await _agentUI.AddNewAgent();
 
-            agentServiceMock.Verify(a => a.AddAgentAsync(It.Is<Agent>(ag => ag.Name == "test")), Times.Once);
+            //Assert
+            _mockAgentService.Verify(a => a.AddAgentAsync(It.Is<Agent>(ag => ag.Name == "test")), Times.Once);
         }
 
         [Test]
-        public async Task ViewAllAgent_WhenCalled_GetAllAgents()
+        public async Task ViewAllAgent_Should_Return_All_Agents()
         {
-            var agentServiceMock = new Mock<IAgentService>();
-            var agentUI = new AgentUI(agentServiceMock.Object);
-
+            //Arrange
             var Agents = new List<Agent>()
             {
-                new Agent() { AgentId = 1, Name = "AgentOne" },
-                new Agent() { AgentId = 2, Name = "AgentTwo" },
-                new Agent() { AgentId = 3, Name = "AgentThree" }
+                new Agent() { AgentId = 1, Name = "fake-first-agent" },
+                new Agent() { AgentId = 2, Name = "fake-second-agent" },
+                new Agent() { AgentId = 3, Name = "fake-third-agent" }
             };
 
-            agentServiceMock.Setup(a=>a.GetAllAgentAsync()).ReturnsAsync(Agents); 
+            _mockAgentService.Setup(a=>a.GetAllAgentAsync()).ReturnsAsync(Agents); 
 
+            //Act
             using (var stringWriter = new StringWriter())
             {
                 var originalConsoleOut = Console.Out;
                 Console.SetOut(stringWriter);
 
-                await agentUI.ViewAllAgents();
+                await _agentUI.ViewAllAgents();
 
                 var output = stringWriter.ToString();
                 Console.WriteLine("Captured Output:");
                 Console.WriteLine(output);
 
-                Assert.That(output, Does.Contain("Here is List of All Agents"));
-                Assert.That(output, Does.Contain("Agent ID: 1, Name: AgentOne"));
-                Assert.That(output, Does.Contain("Agent ID: 2, Name: AgentTwo"));
-                Assert.That(output, Does.Contain("Agent ID: 3, Name: AgentThree"));
+                Assert.That(output, Does.Contain("Agent Id: 1, Name: fake-first-agent"));
+                Assert.That(output, Does.Contain("Agent Id: 2, Name: fake-second-agent"));
+                Assert.That(output, Does.Contain("Agent Id: 3, Name: fake-third-agent"));
             }
-            agentServiceMock.Verify(a => a.GetAllAgentAsync(), Times.Once);
+
+            //Assert
+            _mockAgentService.Verify(a => a.GetAllAgentAsync(), Times.Once);
         }
 
         [Test]
-        public async Task UpdateAgent_WhenCalled_UpdatedTheNameOfAgent()
-        {
-            var agentServiceMock = new Mock<IAgentService>();
-            var agentUI = new AgentUI(agentServiceMock.Object);
-
+        public async Task UpdateAgent_Should_Update_Agent()
+        { 
+            //Arrange
             var existingAgents = new List<Agent>()
             {
-              new Agent() { AgentId = 1, Name = "AgentOne" },
-              new Agent() { AgentId = 2, Name = "AgentTwo" },
-              new Agent() { AgentId = 3, Name = "AgentThree" }
+                new Agent() { AgentId = 1, Name = "fake-first-agent" },
+                new Agent() { AgentId = 2, Name = "fake-second-agent" },
+                new Agent() { AgentId = 3, Name = "fake-third-agent" }
             };
 
-            agentServiceMock.Setup(a => a.GetAllAgentAsync()).ReturnsAsync(existingAgents);
-            agentServiceMock.Setup(a => a.GetAgentByIdAsync(1)).ReturnsAsync(existingAgents.First());
-            agentServiceMock.Setup(a => a.UpdateAgentAsync(It.IsAny<Agent>())).Verifiable();
+            _mockAgentService.Setup(a => a.GetAllAgentAsync()).ReturnsAsync(existingAgents);
+            _mockAgentService.Setup(a => a.GetAgentByIdAsync(1)).ReturnsAsync(existingAgents.First());
+            _mockAgentService.Setup(a => a.UpdateAgentAsync(It.IsAny<Agent>())).Verifiable();
 
+            //Act
             var input = "1" + Environment.NewLine + "AgentOneUpdated" + Environment.NewLine;
             var consoleInput = new StringReader(input);
             Console.SetIn(consoleInput);
          
-            await agentUI.UpdateAgent();
+            await _agentUI.UpdateAgent();
 
-            agentServiceMock.Verify(a => a.UpdateAgentAsync(It.Is<Agent>(ag => ag.AgentId == 1 && ag.Name == "AgentOneUpdated")), Times.Once);
+            //Assert
+            _mockAgentService.Verify(a => a.UpdateAgentAsync(It.Is<Agent>(ag => ag.AgentId == 1 && ag.Name == "AgentOneUpdated")), Times.Once);
 
             Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
         }
