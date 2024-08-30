@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentSoftware.ServiceSP", "R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentSoftware.Tests", "RentSoftware.Tests\RentSoftware.Tests.csproj", "{E07D6CAA-8130-44C8-BA0C-1FD4985AF360}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentSoftware.Api", "RentSoftware.Api\RentSoftware.Api.csproj", "{7CF1A734-D152-41B9-B5C9-5105ABAB8ABF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentSoftware.Api", "RentSoftware.Api\RentSoftware.Api.csproj", "{7CF1A734-D152-41B9-B5C9-5105ABAB8ABF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentSoftware.Desktop", "RentSoftware.Desktop\RentSoftware.Desktop.csproj", "{19854F58-340F-4EE2-A676-B655DD2F69AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{7CF1A734-D152-41B9-B5C9-5105ABAB8ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CF1A734-D152-41B9-B5C9-5105ABAB8ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CF1A734-D152-41B9-B5C9-5105ABAB8ABF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19854F58-340F-4EE2-A676-B655DD2F69AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19854F58-340F-4EE2-A676-B655DD2F69AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19854F58-340F-4EE2-A676-B655DD2F69AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19854F58-340F-4EE2-A676-B655DD2F69AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
