@@ -32,12 +32,7 @@ namespace UILayer
             _agentRepositorySP = agentRepositorySP;
         }
 
-        /*
-        public AgentUI()
-        {
-        }
-        */
-
+      
         public AgentUI(IAgentService agentService)
         {
             _agentService = agentService;
