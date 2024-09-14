@@ -18,7 +18,21 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 ConfigureServices(builder.Services);
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyCors", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors("MyCors");
+//app.UseCors("AllowAngularApp");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -29,7 +43,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers();
 
@@ -52,4 +66,5 @@ static void ConfigureServices(IServiceCollection serviceCollection)
 
     serviceCollection.AddDbContext<RentSoftwareDbContext>(options =>
         options.UseSqlServer("Server=.\\SQLEXPRESS; Database=RentSoftware; Trusted_Connection=true; TrustServerCertificate=true;"));
+    
 }

@@ -1,4 +1,6 @@
 ﻿
+using System.Text.Json.Serialization;
+
 namespace RentSoftware.Core.Entities
 {
     public class Customer
@@ -7,6 +9,7 @@ namespace RentSoftware.Core.Entities
 
         public string CustomerName { get; set; }
 
-        public ICollection<Rent> Rents { get; set; }
+        [JsonIgnore]
+        public ICollection<Rent>? Rents { get; set; }
     }
 }

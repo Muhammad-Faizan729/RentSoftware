@@ -6,7 +6,7 @@ namespace RentSoftware.Core.Repositories
     {
         Task<IEnumerable<Rent>> GetAllRentAsync();
 
-        Task GetRentByIdAsync(int id);
+        Task<Rent> GetRentByIdAsync(int id);
 
         Task AddRentAsync(Rent rent);
 

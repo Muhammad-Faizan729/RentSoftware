@@ -11,7 +11,7 @@ namespace RentSoftware.Core.Services
     {
         Task<IEnumerable<Rent>> GetAllRentAsync();
 
-        Task GetRentByIdAsync(int id);
+        Task<Rent> GetRentByIdAsync(int id);
 
         Task AddRentAsync(Rent rent);
 
@@ -20,3 +20,4 @@ namespace RentSoftware.Core.Services
         Task DeleteRentAsync(int id);
     }
 }
+

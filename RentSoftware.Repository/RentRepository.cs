@@ -19,7 +19,6 @@ namespace RentSoftware.Repository
             _context = context;
         }
         
-
         public async Task AddRentAsync(Rent rent)
         {
             await _context.Rents.AddAsync(rent);
@@ -47,14 +46,15 @@ namespace RentSoftware.Repository
             .ToListAsync();
         }
 
-        public Task GetRentByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task UpdateRentAsync(Rent rent)
         {
             throw new NotImplementedException();
         }
+
+        public async Task<Rent> GetRentByIdAsync(int id)
+        {
+            return await _context.Rents.FindAsync(id);
+        }
     }
+
 }
